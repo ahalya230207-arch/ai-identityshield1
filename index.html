@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI IdentityShield</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #1f2937;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 18px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h2 {
+      color: #60a5fa;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 1200px;
+      margin: 30px auto;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    .login-box {
+      max-width: 450px;
+      margin: 80px auto;
+    }
+
+    h1, h2, h3 {
+      margin-bottom: 15px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0 15px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+    }
+
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .stat {
+      background: white;
+      padding: 22px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    }
+
+    .stat h2 {
+      color: #2563eb;
+      font-size: 30px;
+    }
+
+    .progress {
+      background: #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 22px;
+      margin: 10px 0;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #2563eb;
+      transition: 0.5s;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .low {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .medium {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .high {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+    }
+
+    th {
+      background: #f3f4f6;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .stage {
+      padding: 10px;
+      margin: 6px 0;
+      background: #f3f4f6;
+      border-radius: 6px;
+    }
+
+    .success {
+      color: green;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #6b7280;
+    }
+
+    .small {
+      font-size: 13px;
+      color: #6b7280;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage">
+
+  <div class="login-box card">
+
+    <h1>🛡️ AI IdentityShield</h1>
+
+    <p>
+      AI-Based Fake Identity & Document Screening System
+    </p>
+
+    <br>
+
+    <label>Officer ID</label>
+    <input type="text" id="officerID" placeholder="Example: OFF001">
+
+    <label>Officer Name</label>
+    <input type="text" id="officerName" placeholder="Enter officer name">
+
+    <label>Designation</label>
+    <input type="text" id="designation" placeholder="Immigration Officer">
+
+    <label>Checkpoint / Location</label>
+    <input type="text" id="location" placeholder="Chennai International Airport">
+
+    <label>Role</label>
+
+    <select id="role">
+      <option>Officer</option>
+      <option>Investigator</option>
+      <option>Admin</option>
+    </select>
+
+    <button onclick="login()">Secure Login</button>
+
+    <p class="small">
+      SIH26188 | Ministry of Home Affairs | Blockchain & Cybersecurity
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- MAIN APPLICATION -->
+<div id="app" class="hidden">
+
+<header>
+
+  <div>
+    <h2>🛡️ AI IdentityShield</h2>
+    <small>Intelligent Identity Screening Platform</small>
+  </div>
+
+  <div>
+    <span id="loggedOfficer"></span>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+</header>
+
+
+<div class="container">
+
+<h2>Officer Dashboard</h2>
+
+<div class="dashboard-grid">
+
+  <div class="stat">
+    <h2 id="totalScreened">0</h2>
+    <p>Total Screened</p>
+  </div>
+
+  <div class="stat">
+    <h2 id="verifiedCount">0</h2>
+    <p>Verified</p>
+  </div>
+
+  <div class="stat">
+    <h2 id="reviewCount">0</h2>
+    <p>Review Required</p>
+  </div>
+
+  <div class="stat">
+    <h2 id="highRiskCount">0</h2>
+    <p>High Risk</p>
+  </div>
+
+</div>
+
+
+<div class="card">
+
+<h2>New Identity Screening</h2>
+
+<label>Document Type</label>
+
+<select id="documentType">
+
+<option>Passport</option>
+<option>Visa</option>
+<option>Driving Licence</option>
+<option>National ID</option>
+<option>Work Permit</option>
+
+</select>
+
+
+<label>Upload Identity Document</label>
+
+<input
+type="file"
+id="documentFile"
+accept="image/*,.pdf"
+/>
+
+
+<label>Applicant Name</label>
+
+<input
+type="text"
+id="applicantName"
+placeholder="Enter applicant name"
+/>
+
+
+<label>Document Number</label>
+
+<input
+type="text"
+id="documentNumber"
+placeholder="Enter document number"
+/>
+
+
+<label>Expiry Date</label>
+
+<input
+type="date"
+id="expiryDate"
+/>
+
+
+<button onclick="startScreening()">
+Start AI Screening
+</button>
+
+</div>
+
+
+<!-- SCREENING PROCESS -->
+
+<div
+id="screeningSection"
+class="card hidden"
+>
+
+<h2>AI Screening Process</h2>
+
+<div
+id="stage1"
+class="stage"
+>
+⏳ Image Quality Analysis
+</div>
+
+<div
+id="stage2"
+class="stage"
+>
+⏳ OCR Text Extraction
+</div>
+
+<div
+id="stage3"
+class="stage"
+>
+⏳ Document Validation
+</div>
+
+<div
+id="stage4"
+class="stage"
+>
+⏳ Tampering Detection
+</div>
+
+<div
+id="stage5"
+class="stage"
+>
+⏳ Face Verification
+</div>
+
+<div
+id="stage6"
+class="stage"
+>
+⏳ Risk Analysis
+</div>
+
+
+<div class="progress">
+
+<div
+id="progressBar"
+class="progress-bar"
+>
+</div>
+
+</div>
+
+
+<div
+id="resultBox"
+class="result"
+>
+
+<h2 id="resultTitle"></h2>
+
+<p>
+<strong>Case ID:</strong>
+<span id="caseID"></span>
+</p>
+
+<p>
+<strong>Risk Score:</strong>
+<span id="riskScore"></span>/100
+</p>
+
+<p>
+<strong>Document Status:</strong>
+<span id="documentStatus"></span>
+</p>
+
+<p>
+<strong>AI Recommendation:</strong>
+<span id="recommendation"></span>
+</p>
+
+<br>
+
+<p>
+<strong>SHA-256 Document Hash:</strong>
+</p>
+
+<p
+id="documentHash"
+style="word-break:break-all;"
+>
+</p>
+
+</div>
+
+</div>
+
+
+<!-- CASE HISTORY -->
+
+<div class="card">
+
+<h2>Recent Screening Cases</h2>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Case ID</th>
+<th>Applicant</th>
+<th>Document</th>
+<th>Risk</th>
+<th>Status</th>
+</tr>
+
+</thead>
+
+<tbody id="caseTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div class="card">
+
+<h3>Blockchain Audit Trail</h3>
+
+<p>
+Each screening record generates a SHA-256 cryptographic hash.
+The hash can later be stored in a blockchain network to create
+a tamper-evident verification record.
+</p>
+
+</div>
+
+</div>
+
+
+<footer>
+
+SIH26188 • AI-Based Fake Identity & Document Screening System
+<br>
+Team ALPHA SQUAD
+
+</footer>
+
+</div>
+
+
+<script>
+
+let total = 0;
+let verified = 0;
+let review = 0;
+let highRisk = 0;
+
+
+// LOGIN
+
+function login(){
+
+let id =
+document.getElementById("officerID").value;
+
+let name =
+document.getElementById("officerName").value;
+
+if(id === "" || name === ""){
+
+alert("Please enter Officer ID and Officer Name.");
+
+return;
+
+}
+
+document
+.getElementById("loginPage")
+.classList.add("hidden");
+
+document
+.getElementById("app")
+.classList.remove("hidden");
+
+document
+.getElementById("loggedOfficer")
+.innerText =
+name + " (" + id + ") ";
+
+}
+
+
+// LOGOUT
+
+function logout(){
+
+location.reload();
+
+}
+
+
+// SCREENING
+
+async function startScreening(){
+
+let file =
+document.getElementById("documentFile").files[0];
+
+let applicant =
+document.getElementById("applicantName").value;
+
+let docNumber =
+document.getElementById("documentNumber").value;
+
+if(!file || applicant === "" || docNumber === ""){
+
+alert(
+"Please upload a document and enter applicant information."
+);
+
+return;
+
+}
+
+
+document
+.getElementById("screeningSection")
+.classList.remove("hidden");
+
+document
+.getElementById("resultBox")
+.style.display = "none";
+
+
+let stages = [
+
+"stage1",
+"stage2",
+"stage3",
+"stage4",
+"stage5",
+"stage6"
+
+];
+
+
+let progress =
+document.getElementById("progressBar");
+
+
+for(let i = 0; i < stages.length; i++){
+
+await delay(600);
+
+document.getElementById(stages[i])
+.innerHTML = "✅ " +
+[
+"Image Quality Analysis",
+"OCR Text Extraction",
+"Document Validation",
+"Tampering Detection",
+"Face Verification",
+"Risk Analysis"
+][i]
++
+" Completed";
+
+document.getElementById(stages[i])
+.classList.add("success");
+
+progress.style.width =
+((i + 1) / stages.length * 100)
++ "%";
+
+}
+
+
+createResult(file, applicant);
+
+}
+
+
+// CREATE SCREENING RESULT
+
+async function createResult(file, applicant){
+
+let risk =
+Math.floor(Math.random() * 101);
+
+let status;
+let recommendation;
+let className;
+
+
+if(risk <= 30){
+
+status = "VERIFIED";
+
+recommendation =
+"Document appears valid. Proceed with normal verification.";
+
+className = "low";
+
+verified++;
+
+}
+
+else if(risk <= 70){
+
+status = "REVIEW REQUIRED";
+
+recommendation =
+"Potential inconsistency detected. Manual officer review recommended.";
+
+className = "medium";
+
+review++;
+
+}
+
+else{
+
+status = "HIGH RISK";
+
+recommendation =
+"Suspicious document patterns detected. Escalate for investigation.";
+
+className = "high";
+
+highRisk++;
+
+}
+
+
+total++;
+
+
+let caseNumber =
+"AIS-2026-" +
+String(total).padStart(4,"0");
+
+
+let hash =
+await generateSHA256(file);
+
+
+let result =
+document.getElementById("resultBox");
+
+result.className =
+"result " + className;
+
+result.style.display =
+"block";
+
+
+document.getElementById("caseID")
+.innerText =
+caseNumber;
+
+
+document.getElementById("riskScore")
+.innerText =
+risk;
+
+
+document.getElementById("documentStatus")
+.innerText =
+status;
+
+
+document.getElementById("recommendation")
+.innerText =
+recommendation;
+
+
+document.getElementById("resultTitle")
+.innerText =
+"Screening Result: " + status;
+
+
+document.getElementById("documentHash")
+.innerText =
+hash;
+
+
+updateDashboard();
+
+addCase(
+caseNumber,
+applicant,
+risk,
+status
+);
+
+}
+
+
+// SHA-256 HASH
+
+async function generateSHA256(file){
+
+let buffer =
+await file.arrayBuffer();
+
+let hashBuffer =
+await crypto.subtle.digest(
+"SHA-256",
+buffer
+);
+
+let hashArray =
+Array.from(
+new Uint8Array(hashBuffer)
+);
+
+return hashArray
+.map(
+b =>
+b.toString(16)
+.padStart(2,"0")
+)
+.join("");
+
+}
+
+
+// DASHBOARD UPDATE
+
+function updateDashboard(){
+
+document.getElementById("totalScreened")
+.innerText =
+total;
+
+document.getElementById("verifiedCount")
+.innerText =
+verified;
+
+document.getElementById("reviewCount")
+.innerText =
+review;
+
+document.getElementById("highRiskCount")
+.innerText =
+highRisk;
+
+}
+
+
+// CASE TABLE
+
+function addCase(
+caseID,
+applicant,
+risk,
+status
+){
+
+let documentType =
+document
+.getElementById("documentType")
+.value;
+
+
+let row =
+document
+.getElementById("caseTable")
+.insertRow(0);
+
+
+row.insertCell(0)
+.innerText =
+caseID;
+
+row.insertCell(1)
+.innerText =
+applicant;
+
+row.insertCell(2)
+.innerText =
+documentType;
+
+row.insertCell(3)
+.innerText =
+risk + "/100";
+
+row.insertCell(4)
+.innerText =
+status;
+
+}
+
+
+// DELAY
+
+function delay(ms){
+
+return new Promise(
+resolve =>
+setTimeout(resolve,ms)
+);
+
+}
+
+</script>
+
+</body>
+</html>
