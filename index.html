@@ -1,284 +1,454 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI IdentityShield</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
+<title>AI IdentityShield</title>
+
+<!-- Tesseract OCR -->
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f3f6fa;
+    color:#1f2937;
+}
+
+/* HEADER */
+
+header{
+    background:#111827;
+    color:white;
+    padding:18px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+header h2{
+    color:#60a5fa;
+}
+
+button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+/* LOGIN */
+
+.login-page{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.login-box{
+    width:430px;
+    background:white;
+    padding:35px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+}
+
+.login-box h1{
+    color:#2563eb;
+    margin-bottom:10px;
+}
+
+.login-box p{
+    color:#6b7280;
+    margin-bottom:20px;
+}
+
+input,select{
+    width:100%;
+    padding:12px;
+    margin-top:7px;
+    margin-bottom:15px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+}
+
+/* MAIN */
+
+.container{
+    width:92%;
+    max-width:1200px;
+    margin:30px auto;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:14px;
+    margin-bottom:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,.07);
+}
+
+/* STATS */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin:20px 0;
+}
+
+.stat{
+    background:white;
+    padding:22px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 3px 10px rgba(0,0,0,.06);
+}
+
+.stat h2{
+    font-size:30px;
+    color:#2563eb;
+}
+
+/* SCREENING */
+
+.stage{
+    background:#f3f4f6;
+    padding:12px;
+    margin:7px 0;
+    border-radius:7px;
+}
+
+.completed{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.progress{
+    height:22px;
+    background:#e5e7eb;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:15px;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+    background:#2563eb;
+    transition:.5s;
+}
+
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding:20px;
+    border-radius:10px;
+}
+
+.low{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.medium{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.high{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+/* OCR */
+
+.ocr-box{
+    background:#111827;
+    color:#d1fae5;
+    padding:15px;
+    border-radius:8px;
+    margin-top:15px;
+    white-space:pre-wrap;
+    max-height:250px;
+    overflow:auto;
+}
+
+/* TABLE */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+th,td{
+    padding:12px;
+    border-bottom:1px solid #e5e7eb;
+    text-align:left;
+}
+
+th{
+    background:#f3f4f6;
+}
+
+.hidden{
+    display:none;
+}
+
+.small{
+    font-size:13px;
+    color:#6b7280;
+    margin-top:15px;
+}
+
+.success{
+    color:#15803d;
+    font-weight:bold;
+}
+
+.warning{
+    color:#b45309;
+    font-weight:bold;
+}
+
+.danger{
+    color:#b91c1c;
+    font-weight:bold;
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#6b7280;
+}
+
+@media(max-width:600px){
+
+    header{
+        flex-direction:column;
+        gap:10px;
+        text-align:center;
     }
 
-    body {
-      background: #f4f7fb;
-      color: #1f2937;
+    .login-box{
+        width:92%;
     }
 
-    header {
-      background: #111827;
-      color: white;
-      padding: 18px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+}
 
-    header h2 {
-      color: #60a5fa;
-    }
-
-    .container {
-      width: 92%;
-      max-width: 1200px;
-      margin: 30px auto;
-    }
-
-    .card {
-      background: white;
-      padding: 25px;
-      border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      margin-bottom: 20px;
-    }
-
-    .login-box {
-      max-width: 450px;
-      margin: 80px auto;
-    }
-
-    h1, h2, h3 {
-      margin-bottom: 15px;
-    }
-
-    input,
-    select {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0 15px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-    }
-
-    button {
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    button:hover {
-      background: #1d4ed8;
-    }
-
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-
-    .stat {
-      background: white;
-      padding: 22px;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
-    }
-
-    .stat h2 {
-      color: #2563eb;
-      font-size: 30px;
-    }
-
-    .progress {
-      background: #e5e7eb;
-      border-radius: 10px;
-      overflow: hidden;
-      height: 22px;
-      margin: 10px 0;
-    }
-
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: #2563eb;
-      transition: 0.5s;
-    }
-
-    .result {
-      margin-top: 20px;
-      padding: 20px;
-      border-radius: 10px;
-      display: none;
-    }
-
-    .low {
-      background: #dcfce7;
-      color: #166534;
-    }
-
-    .medium {
-      background: #fef3c7;
-      color: #92400e;
-    }
-
-    .high {
-      background: #fee2e2;
-      color: #991b1b;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-
-    th,
-    td {
-      padding: 12px;
-      border-bottom: 1px solid #e5e7eb;
-      text-align: left;
-    }
-
-    th {
-      background: #f3f4f6;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .stage {
-      padding: 10px;
-      margin: 6px 0;
-      background: #f3f4f6;
-      border-radius: 6px;
-    }
-
-    .success {
-      color: green;
-      font-weight: bold;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #6b7280;
-    }
-
-    .small {
-      font-size: 13px;
-      color: #6b7280;
-      margin-top: 10px;
-    }
-  </style>
+</style>
 </head>
+
 
 <body>
 
-<!-- LOGIN PAGE -->
-<div id="loginPage">
 
-  <div class="login-box card">
+<!-- ================= LOGIN PAGE ================= -->
 
-    <h1>🛡️ AI IdentityShield</h1>
+<div id="loginPage" class="login-page">
 
-    <p>
-      AI-Based Fake Identity & Document Screening System
-    </p>
+<div class="login-box">
 
-    <br>
+<h1>🛡️ AI IdentityShield</h1>
 
-    <label>Officer ID</label>
-    <input type="text" id="officerID" placeholder="Example: OFF001">
+<p>
+AI-Based Fake Identity & Document Screening System
+</p>
 
-    <label>Officer Name</label>
-    <input type="text" id="officerName" placeholder="Enter officer name">
+<label>Officer ID</label>
 
-    <label>Designation</label>
-    <input type="text" id="designation" placeholder="Immigration Officer">
+<input
+type="text"
+id="officerID"
+placeholder="Example: OFF001"
+>
 
-    <label>Checkpoint / Location</label>
-    <input type="text" id="location" placeholder="Chennai International Airport">
 
-    <label>Role</label>
+<label>Officer Name</label>
 
-    <select id="role">
-      <option>Officer</option>
-      <option>Investigator</option>
-      <option>Admin</option>
-    </select>
+<input
+type="text"
+id="officerName"
+placeholder="Example: Arun Kumar"
+>
 
-    <button onclick="login()">Secure Login</button>
 
-    <p class="small">
-      SIH26188 | Ministry of Home Affairs | Blockchain & Cybersecurity
-    </p>
+<label>Designation</label>
 
-  </div>
+<input
+type="text"
+id="designation"
+placeholder="Immigration Officer"
+>
+
+
+<label>Checkpoint / Location</label>
+
+<input
+type="text"
+id="location"
+placeholder="Chennai International Airport"
+>
+
+
+<label>Role</label>
+
+<select id="role">
+
+<option>Officer</option>
+<option>Investigator</option>
+<option>Admin</option>
+
+</select>
+
+
+<button onclick="login()">
+Secure Login
+</button>
+
+
+<div class="small">
+
+SIH26188<br>
+Ministry of Home Affairs<br>
+Theme: Blockchain & Cybersecurity<br>
+Team: ALPHA SQUAD
+
+</div>
+
+</div>
 
 </div>
 
 
-<!-- MAIN APPLICATION -->
+<!-- ================= APPLICATION ================= -->
+
 <div id="app" class="hidden">
+
 
 <header>
 
-  <div>
-    <h2>🛡️ AI IdentityShield</h2>
-    <small>Intelligent Identity Screening Platform</small>
-  </div>
+<div>
 
-  <div>
-    <span id="loggedOfficer"></span>
-    <button onclick="logout()">Logout</button>
-  </div>
+<h2>🛡️ AI IdentityShield</h2>
+
+<small>
+Intelligent Identity Screening Platform
+</small>
+
+</div>
+
+
+<div>
+
+<span id="loggedOfficer"></span>
+
+<button onclick="logout()">
+Logout
+</button>
+
+</div>
 
 </header>
 
 
 <div class="container">
 
+
+<!-- DASHBOARD -->
+
 <h2>Officer Dashboard</h2>
+
 
 <div class="dashboard-grid">
 
-  <div class="stat">
-    <h2 id="totalScreened">0</h2>
-    <p>Total Screened</p>
-  </div>
 
-  <div class="stat">
-    <h2 id="verifiedCount">0</h2>
-    <p>Verified</p>
-  </div>
+<div class="stat">
 
-  <div class="stat">
-    <h2 id="reviewCount">0</h2>
-    <p>Review Required</p>
-  </div>
+<h2 id="totalScreened">
+0
+</h2>
 
-  <div class="stat">
-    <h2 id="highRiskCount">0</h2>
-    <p>High Risk</p>
-  </div>
+<p>
+Total Screened
+</p>
 
 </div>
 
 
+<div class="stat">
+
+<h2 id="verifiedCount">
+0
+</h2>
+
+<p>
+Verified
+</p>
+
+</div>
+
+
+<div class="stat">
+
+<h2 id="reviewCount">
+0
+</h2>
+
+<p>
+Review Required
+</p>
+
+</div>
+
+
+<div class="stat">
+
+<h2 id="highRiskCount">
+0
+</h2>
+
+<p>
+High Risk
+</p>
+
+</div>
+
+
+</div>
+
+
+<!-- NEW SCREENING -->
+
 <div class="card">
 
-<h2>New Identity Screening</h2>
+<h2>
+🔍 New Identity Screening
+</h2>
 
-<label>Document Type</label>
+
+<label>
+Document Type
+</label>
 
 <select id="documentType">
 
@@ -291,96 +461,94 @@
 </select>
 
 
-<label>Upload Identity Document</label>
+<label>
+Upload Identity Document
+</label>
 
 <input
 type="file"
 id="documentFile"
 accept="image/*,.pdf"
-/>
+>
 
 
-<label>Applicant Name</label>
+<label>
+Applicant Name
+</label>
 
 <input
 type="text"
 id="applicantName"
-placeholder="Enter applicant name"
-/>
+placeholder="Example: Rahul Kumar"
+>
 
 
-<label>Document Number</label>
+<label>
+Document Number
+</label>
 
 <input
 type="text"
 id="documentNumber"
-placeholder="Enter document number"
-/>
+placeholder="Example: P1234567"
+>
 
 
-<label>Expiry Date</label>
+<label>
+Expiry Date
+</label>
 
 <input
 type="date"
 id="expiryDate"
-/>
+>
 
 
 <button onclick="startScreening()">
-Start AI Screening
+🚀 Start AI Screening
 </button>
 
 </div>
 
 
-<!-- SCREENING PROCESS -->
+<!-- SCREENING -->
 
 <div
 id="screeningSection"
 class="card hidden"
 >
 
-<h2>AI Screening Process</h2>
+<h2>
+🤖 AI Screening Process
+</h2>
 
-<div
-id="stage1"
-class="stage"
->
+
+<div id="stage1" class="stage">
 ⏳ Image Quality Analysis
 </div>
 
-<div
-id="stage2"
-class="stage"
->
+
+<div id="stage2" class="stage">
 ⏳ OCR Text Extraction
 </div>
 
-<div
-id="stage3"
-class="stage"
->
+
+<div id="stage3" class="stage">
 ⏳ Document Validation
 </div>
 
-<div
-id="stage4"
-class="stage"
->
+
+<div id="stage4" class="stage">
 ⏳ Tampering Detection
 </div>
 
-<div
-id="stage5"
-class="stage"
->
+
+<div id="stage5" class="stage">
 ⏳ Face Verification
 </div>
 
-<div
-id="stage6"
-class="stage"
->
+
+<div id="stage6" class="stage">
 ⏳ Risk Analysis
 </div>
 
@@ -396,38 +564,66 @@ class="progress-bar"
 </div>
 
 
+<!-- OCR OUTPUT -->
+
+<div id="ocrContainer" class="hidden">
+
+<h3>
+📄 Extracted OCR Text
+</h3>
+
+<div
+id="ocrText"
+class="ocr-box"
+>
+</div>
+
+</div>
+
+
+<!-- RESULT -->
+
 <div
 id="resultBox"
 class="result"
 >
 
-<h2 id="resultTitle"></h2>
+<h2 id="resultTitle">
+Screening Result
+</h2>
+
 
 <p>
 <strong>Case ID:</strong>
 <span id="caseID"></span>
 </p>
 
+
 <p>
 <strong>Risk Score:</strong>
 <span id="riskScore"></span>/100
 </p>
+
 
 <p>
 <strong>Document Status:</strong>
 <span id="documentStatus"></span>
 </p>
 
+
 <p>
 <strong>AI Recommendation:</strong>
 <span id="recommendation"></span>
 </p>
 
+
 <br>
+
 
 <p>
 <strong>SHA-256 Document Hash:</strong>
 </p>
+
 
 <p
 id="documentHash"
@@ -444,21 +640,41 @@ style="word-break:break-all;"
 
 <div class="card">
 
-<h2>Recent Screening Cases</h2>
+<h2>
+📋 Recent Screening Cases
+</h2>
+
 
 <table>
 
 <thead>
 
 <tr>
-<th>Case ID</th>
-<th>Applicant</th>
-<th>Document</th>
-<th>Risk</th>
-<th>Status</th>
+
+<th>
+Case ID
+</th>
+
+<th>
+Applicant
+</th>
+
+<th>
+Document
+</th>
+
+<th>
+Risk
+</th>
+
+<th>
+Status
+</th>
+
 </tr>
 
 </thead>
+
 
 <tbody id="caseTable">
 
@@ -469,17 +685,26 @@ style="word-break:break-all;"
 </div>
 
 
+<!-- BLOCKCHAIN -->
+
 <div class="card">
 
-<h3>Blockchain Audit Trail</h3>
+<h2>
+⛓️ Blockchain Audit Trail
+</h2>
 
 <p>
-Each screening record generates a SHA-256 cryptographic hash.
-The hash can later be stored in a blockchain network to create
-a tamper-evident verification record.
+
+Each document generates a SHA-256 cryptographic hash.
+The actual document is not stored in the blockchain.
+
+The hash can later be recorded on a blockchain network
+to create a tamper-evident audit trail.
+
 </p>
 
 </div>
+
 
 </div>
 
@@ -487,57 +712,89 @@ a tamper-evident verification record.
 <footer>
 
 SIH26188 • AI-Based Fake Identity & Document Screening System
+
 <br>
-Team ALPHA SQUAD
+
+ALPHA SQUAD
 
 </footer>
+
 
 </div>
 
 
 <script>
 
+
+/* ================= VARIABLES ================= */
+
 let total = 0;
+
 let verified = 0;
+
 let review = 0;
+
 let highRisk = 0;
 
 
-// LOGIN
+/* ================= LOGIN ================= */
 
 function login(){
 
-let id =
-document.getElementById("officerID").value;
+const officerID =
+document.getElementById("officerID").value.trim();
 
-let name =
-document.getElementById("officerName").value;
+const officerName =
+document.getElementById("officerName").value.trim();
 
-if(id === "" || name === ""){
+const designation =
+document.getElementById("designation").value.trim();
 
-alert("Please enter Officer ID and Officer Name.");
+const location =
+document.getElementById("location").value.trim();
+
+const role =
+document.getElementById("role").value;
+
+
+if(
+officerID === "" ||
+officerName === "" ||
+designation === "" ||
+location === ""
+){
+
+alert(
+"Please fill all officer details."
+);
 
 return;
 
 }
 
+
 document
 .getElementById("loginPage")
 .classList.add("hidden");
+
 
 document
 .getElementById("app")
 .classList.remove("hidden");
 
+
 document
 .getElementById("loggedOfficer")
 .innerText =
-name + " (" + id + ") ";
+officerName +
+" | " +
+role;
+
 
 }
 
 
-// LOGOUT
+/* ================= LOGOUT ================= */
 
 function logout(){
 
@@ -546,23 +803,45 @@ location.reload();
 }
 
 
-// SCREENING
+/* ================= SCREENING ================= */
 
 async function startScreening(){
 
-let file =
-document.getElementById("documentFile").files[0];
 
-let applicant =
-document.getElementById("applicantName").value;
+const file =
+document
+.getElementById("documentFile")
+.files[0];
 
-let docNumber =
-document.getElementById("documentNumber").value;
 
-if(!file || applicant === "" || docNumber === ""){
+const applicant =
+document
+.getElementById("applicantName")
+.value
+.trim();
+
+
+const documentNumber =
+document
+.getElementById("documentNumber")
+.value
+.trim();
+
+
+const expiryDate =
+document
+.getElementById("expiryDate")
+.value;
+
+
+if(
+!file ||
+applicant === "" ||
+documentNumber === ""
+){
 
 alert(
-"Please upload a document and enter applicant information."
+"Please upload a document and enter applicant details."
 );
 
 return;
@@ -572,14 +851,23 @@ return;
 
 document
 .getElementById("screeningSection")
-.classList.remove("hidden");
+.classList
+.remove("hidden");
+
 
 document
 .getElementById("resultBox")
-.style.display = "none";
+.style
+.display = "none";
 
 
-let stages = [
+document
+.getElementById("ocrContainer")
+.classList
+.add("hidden");
+
+
+const stages = [
 
 "stage1",
 "stage2",
@@ -591,62 +879,353 @@ let stages = [
 ];
 
 
-let progress =
-document.getElementById("progressBar");
+const stageNames = [
 
-
-for(let i = 0; i < stages.length; i++){
-
-await delay(600);
-
-document.getElementById(stages[i])
-.innerHTML = "✅ " +
-[
 "Image Quality Analysis",
 "OCR Text Extraction",
 "Document Validation",
 "Tampering Detection",
 "Face Verification",
 "Risk Analysis"
-][i]
-+
-" Completed";
 
-document.getElementById(stages[i])
-.classList.add("success");
+];
+
+
+const progress =
+document.getElementById("progressBar");
+
+
+/* RESET */
+
+stages.forEach(
+(stage,index)=>{
+
+const element =
+document.getElementById(stage);
+
+element.className =
+"stage";
+
+element.innerText =
+"⏳ " +
+stageNames[index];
+
+}
+);
+
 
 progress.style.width =
-((i + 1) / stages.length * 100)
-+ "%";
+"0%";
+
+
+/* STAGE 1 */
+
+await delay(700);
+
+
+completeStage(
+"stage1",
+"Image Quality Analysis"
+);
+
+
+progress.style.width =
+"16%";
+
+
+/* STAGE 2 OCR */
+
+const ocrResult =
+await performOCR(file);
+
+
+document
+.getElementById("ocrContainer")
+.classList
+.remove("hidden");
+
+
+document
+.getElementById("ocrText")
+.innerText =
+ocrResult;
+
+
+completeStage(
+"stage2",
+"OCR Text Extraction"
+);
+
+
+progress.style.width =
+"33%";
+
+
+/* STAGE 3 */
+
+await delay(700);
+
+
+let validation =
+validateDocument(
+documentNumber,
+expiryDate
+);
+
+
+completeStage(
+"stage3",
+"Document Validation"
+);
+
+
+progress.style.width =
+"50%";
+
+
+/* STAGE 4 */
+
+await delay(700);
+
+
+completeStage(
+"stage4",
+"Tampering Detection"
+);
+
+
+progress.style.width =
+"66%";
+
+
+/* STAGE 5 */
+
+await delay(700);
+
+
+completeStage(
+"stage5",
+"Face Verification"
+);
+
+
+progress.style.width =
+"83%";
+
+
+/* STAGE 6 */
+
+await delay(700);
+
+
+completeStage(
+"stage6",
+"Risk Analysis"
+);
+
+
+progress.style.width =
+"100%";
+
+
+/* RESULT */
+
+await createResult(
+file,
+applicant,
+validation
+);
 
 }
 
 
-createResult(file, applicant);
+/* ================= OCR ================= */
+
+async function performOCR(file){
+
+if(
+!file.type.startsWith("image/")
+){
+
+return "OCR is currently available for image documents.\n\nFor PDF documents, backend PDF processing will be added in the next version.";
 
 }
 
 
-// CREATE SCREENING RESULT
+document
+.getElementById("ocrText")
+.innerText =
+"Reading document... Please wait.";
 
-async function createResult(file, applicant){
+
+try{
+
+
+const result =
+await Tesseract.recognize(
+
+file,
+
+"eng",
+
+{
+
+logger:
+info => {
+
+if(
+info.status ===
+"recognizing text"
+){
+
+document
+.getElementById("ocrText")
+.innerText =
+"Extracting text... " +
+Math.round(
+info.progress * 100
+) +
+"%";
+
+}
+
+}
+
+}
+
+);
+
+
+return result.data.text ||
+"No readable text detected.";
+
+
+}
+
+catch(error){
+
+return
+"OCR processing failed: "
++
+error.message;
+
+}
+
+}
+
+
+/* ================= VALIDATION ================= */
+
+function validateDocument(
+documentNumber,
+expiryDate
+){
+
+let valid = true;
+
+let messages = [];
+
+
+/* DOCUMENT NUMBER */
+
+if(
+documentNumber.length < 5
+){
+
+valid = false;
+
+messages.push(
+"Document number appears invalid."
+);
+
+}
+
+
+/* EXPIRY */
+
+if(expiryDate){
+
+const today =
+new Date();
+
+const expiry =
+new Date(expiryDate);
+
+
+if(expiry < today){
+
+valid = false;
+
+messages.push(
+"Document has expired."
+);
+
+}
+
+}
+
+
+return {
+
+valid:valid,
+
+messages:messages
+
+};
+
+}
+
+
+/* ================= RESULT ================= */
+
+async function createResult(
+file,
+applicant,
+validation
+){
+
 
 let risk =
-Math.floor(Math.random() * 101);
+Math.floor(
+Math.random() * 51
+);
+
+
+/* Increase risk if validation failed */
+
+if(
+!validation.valid
+){
+
+risk += 40;
+
+}
+
+
+if(risk > 100){
+
+risk = 100;
+
+}
+
 
 let status;
+
 let recommendation;
-let className;
+
+let resultClass;
 
 
 if(risk <= 30){
 
-status = "VERIFIED";
+status =
+"VERIFIED";
 
 recommendation =
 "Document appears valid. Proceed with normal verification.";
 
-className = "low";
+resultClass =
+"low";
 
 verified++;
 
@@ -654,12 +1233,14 @@ verified++;
 
 else if(risk <= 70){
 
-status = "REVIEW REQUIRED";
+status =
+"REVIEW REQUIRED";
 
 recommendation =
 "Potential inconsistency detected. Manual officer review recommended.";
 
-className = "medium";
+resultClass =
+"medium";
 
 review++;
 
@@ -667,12 +1248,14 @@ review++;
 
 else{
 
-status = "HIGH RISK";
+status =
+"HIGH RISK";
 
 recommendation =
-"Suspicious document patterns detected. Escalate for investigation.";
+"Suspicious patterns detected. Escalate for investigation.";
 
-className = "high";
+resultClass =
+"high";
 
 highRisk++;
 
@@ -682,59 +1265,79 @@ highRisk++;
 total++;
 
 
-let caseNumber =
+const caseID =
 "AIS-2026-" +
-String(total).padStart(4,"0");
+String(total).padStart(
+4,
+"0"
+);
 
 
-let hash =
+/* SHA-256 */
+
+const hash =
 await generateSHA256(file);
 
 
-let result =
-document.getElementById("resultBox");
+/* DISPLAY */
 
-result.className =
-"result " + className;
+const resultBox =
+document.getElementById(
+"resultBox"
+);
 
-result.style.display =
+
+resultBox.className =
+"result " +
+resultClass;
+
+
+resultBox.style.display =
 "block";
 
 
-document.getElementById("caseID")
+document
+.getElementById("resultTitle")
 .innerText =
-caseNumber;
+"🚨 Screening Result: " +
+status;
 
 
-document.getElementById("riskScore")
+document
+.getElementById("caseID")
+.innerText =
+caseID;
+
+
+document
+.getElementById("riskScore")
 .innerText =
 risk;
 
 
-document.getElementById("documentStatus")
+document
+.getElementById("documentStatus")
 .innerText =
 status;
 
 
-document.getElementById("recommendation")
+document
+.getElementById("recommendation")
 .innerText =
 recommendation;
 
 
-document.getElementById("resultTitle")
-.innerText =
-"Screening Result: " + status;
-
-
-document.getElementById("documentHash")
+document
+.getElementById("documentHash")
 .innerText =
 hash;
 
 
 updateDashboard();
 
+
 addCase(
-caseNumber,
+caseID,
 applicant,
 risk,
 status
@@ -743,28 +1346,32 @@ status
 }
 
 
-// SHA-256 HASH
+/* ================= SHA-256 ================= */
 
 async function generateSHA256(file){
 
-let buffer =
+const buffer =
 await file.arrayBuffer();
 
-let hashBuffer =
+
+const hashBuffer =
 await crypto.subtle.digest(
 "SHA-256",
 buffer
 );
 
-let hashArray =
+
+const hashArray =
 Array.from(
 new Uint8Array(hashBuffer)
 );
 
+
 return hashArray
 .map(
-b =>
-b.toString(16)
+byte =>
+byte
+.toString(16)
 .padStart(2,"0")
 )
 .join("");
@@ -772,30 +1379,37 @@ b.toString(16)
 }
 
 
-// DASHBOARD UPDATE
+/* ================= DASHBOARD ================= */
 
 function updateDashboard(){
 
-document.getElementById("totalScreened")
+document
+.getElementById("totalScreened")
 .innerText =
 total;
 
-document.getElementById("verifiedCount")
+
+document
+.getElementById("verifiedCount")
 .innerText =
 verified;
 
-document.getElementById("reviewCount")
+
+document
+.getElementById("reviewCount")
 .innerText =
 review;
 
-document.getElementById("highRiskCount")
+
+document
+.getElementById("highRiskCount")
 .innerText =
 highRisk;
 
 }
 
 
-// CASE TABLE
+/* ================= CASE TABLE ================= */
 
 function addCase(
 caseID,
@@ -804,33 +1418,41 @@ risk,
 status
 ){
 
-let documentType =
+const documentType =
 document
 .getElementById("documentType")
 .value;
 
 
-let row =
+const table =
 document
-.getElementById("caseTable")
-.insertRow(0);
+.getElementById("caseTable");
+
+
+const row =
+table.insertRow(0);
 
 
 row.insertCell(0)
 .innerText =
 caseID;
 
+
 row.insertCell(1)
 .innerText =
 applicant;
+
 
 row.insertCell(2)
 .innerText =
 documentType;
 
+
 row.insertCell(3)
 .innerText =
-risk + "/100";
+risk +
+"/100";
+
 
 row.insertCell(4)
 .innerText =
@@ -839,13 +1461,39 @@ status;
 }
 
 
-// DELAY
+/* ================= STAGE ================= */
+
+function completeStage(
+id,
+name
+){
+
+const element =
+document.getElementById(id);
+
+
+element.innerText =
+"✅ " +
+name +
+" Completed";
+
+
+element.classList
+.add("completed");
+
+}
+
+
+/* ================= DELAY ================= */
 
 function delay(ms){
 
 return new Promise(
 resolve =>
-setTimeout(resolve,ms)
+setTimeout(
+resolve,
+ms
+)
 );
 
 }
