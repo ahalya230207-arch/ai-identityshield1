@@ -34,7 +34,7 @@ body{
 }
 
 .login-box{
-    width:360px;
+    width:370px;
     background:white;
     padding:30px;
     border-radius:15px;
@@ -168,11 +168,6 @@ header h2{
     color:#991b1b;
 }
 
-.invalid-stage{
-    background:#fee2e2;
-    color:#991b1b;
-}
-
 .progress{
     height:20px;
     background:#e5e7eb;
@@ -194,7 +189,7 @@ header h2{
     padding:15px;
     border-radius:8px;
     white-space:pre-wrap;
-    max-height:300px;
+    max-height:350px;
     overflow:auto;
     font-family:monospace;
 }
@@ -264,7 +259,7 @@ header h2{
 
 .finding{
     background:white;
-    padding:10px;
+    padding:12px;
     margin:6px 0;
     border-radius:6px;
 }
@@ -306,10 +301,6 @@ th{
     color:#991b1b;
 }
 
-.clear-btn{
-    background:#6b7280;
-}
-
 .match-text{
     color:#166534;
     font-weight:bold;
@@ -327,9 +318,11 @@ footer{
 }
 
 @media(max-width:900px){
+
     .dashboard{
         grid-template-columns:repeat(2,1fr);
     }
+
 }
 
 @media(max-width:650px){
@@ -346,6 +339,7 @@ footer{
         flex-direction:column;
         gap:10px;
     }
+
 }
 
 </style>
@@ -353,7 +347,10 @@ footer{
 
 <body>
 
-<!-- ================= LOGIN ================= -->
+
+<!-- =====================================================
+LOGIN
+===================================================== -->
 
 <div id="loginPage" class="login-page">
 
@@ -398,7 +395,9 @@ Demo: OFF001 / 1234
 </div>
 
 
-<!-- ================= APP ================= -->
+<!-- =====================================================
+APPLICATION
+===================================================== -->
 
 <div id="app" class="hidden">
 
@@ -433,42 +432,66 @@ Logout
 
 <div class="container">
 
+
 <h1>Officer Dashboard</h1>
 
 
-<!-- DASHBOARD -->
+<!-- =====================================================
+DASHBOARD
+===================================================== -->
 
 <div class="dashboard">
 
 <div class="stat">
+
 <h2 id="total">0</h2>
+
 <p>Total Screened</p>
+
 </div>
 
+
 <div class="stat">
+
 <h2 id="verified">0</h2>
+
 <p>Verified</p>
+
 </div>
 
+
 <div class="stat">
+
 <h2 id="review">0</h2>
+
 <p>Review Required</p>
+
 </div>
 
+
 <div class="stat">
+
 <h2 id="highRisk">0</h2>
+
 <p>High Risk</p>
+
 </div>
+
 
 <div class="stat">
+
 <h2 id="today">0</h2>
+
 <p>Today's Cases</p>
-</div>
 
 </div>
 
+</div>
 
-<!-- SCREENING FORM -->
+
+<!-- =====================================================
+NEW SCREENING
+===================================================== -->
 
 <div class="card">
 
@@ -480,7 +503,9 @@ Upload an identity document for AI-assisted verification.
 
 </p>
 
+
 <div class="form-grid">
+
 
 <div>
 
@@ -569,12 +594,15 @@ type="date"
 
 </div>
 
-</div>
 
 </div>
 
+</div>
 
-<!-- SCREENING -->
+
+<!-- =====================================================
+AI PROCESS
+===================================================== -->
 
 <div id="screening" class="card hidden">
 
@@ -582,49 +610,85 @@ type="date"
 
 <br>
 
+
 <div id="s1" class="stage">
+
 <span>1. Image Quality Check</span>
+
 <span>Waiting</span>
+
 </div>
+
 
 <div id="s2" class="stage">
+
 <span>2. OCR Text Extraction</span>
+
 <span>Waiting</span>
+
 </div>
+
 
 <div id="s3" class="stage">
+
 <span>3. Document Type Detection</span>
+
 <span>Waiting</span>
+
 </div>
+
 
 <div id="s4" class="stage">
+
 <span>4. Document Type Matching</span>
+
 <span>Waiting</span>
+
 </div>
+
 
 <div id="s5" class="stage">
+
 <span>5. Mandatory Field Validation</span>
+
 <span>Waiting</span>
+
 </div>
+
 
 <div id="s6" class="stage">
+
 <span>6. Date Validation</span>
+
 <span>Waiting</span>
+
 </div>
+
 
 <div id="s7" class="stage">
+
 <span>7. Identity Name & DOB Matching</span>
+
 <span>Waiting</span>
+
 </div>
 
+
 <div id="s8" class="stage">
+
 <span>8. Risk Score & Screening Result</span>
+
 <span>Waiting</span>
+
 </div>
+
 
 <div class="progress">
 
-<div id="bar" class="progress-bar"></div>
+<div
+id="bar"
+class="progress-bar">
+</div>
 
 </div>
 
@@ -635,7 +699,10 @@ type="date"
 
 <br>
 
-<div id="ocrText" class="ocr"></div>
+<div
+id="ocrText"
+class="ocr">
+</div>
 
 </div>
 
@@ -647,7 +714,9 @@ type="date"
 <div id="identityValidation"></div>
 
 
-<!-- RESULT -->
+<!-- =====================================================
+RESULT
+===================================================== -->
 
 <div id="result" class="result">
 
@@ -655,49 +724,60 @@ type="date"
 Screening Result
 </h2>
 
+
 <div id="risk" class="risk"></div>
+
 
 <p>
 <strong>Case ID:</strong>
 <span id="caseID"></span>
 </p>
 
+
 <p>
 <strong>Selected Document:</strong>
 <span id="resultDoc"></span>
 </p>
+
 
 <p>
 <strong>Detected Document:</strong>
 <span id="detectedDoc"></span>
 </p>
 
+
 <p>
 <strong>Applicant:</strong>
 <span id="resultApplicant"></span>
 </p>
+
 
 <p>
 <strong>Date of Birth:</strong>
 <span id="resultDOB"></span>
 </p>
 
+
 <p>
 <strong>Expiry Date:</strong>
 <span id="resultExpiry"></span>
 </p>
+
 
 <p>
 <strong>Status:</strong>
 <span id="status"></span>
 </p>
 
+
 <p>
 <strong>Recommendation:</strong>
 <span id="recommendation"></span>
 </p>
 
+
 <br>
+
 
 <h3>🔎 Verification Findings</h3>
 
@@ -708,7 +788,9 @@ Screening Result
 </div>
 
 
-<!-- HISTORY -->
+<!-- =====================================================
+HISTORY
+===================================================== -->
 
 <div class="card">
 
@@ -723,8 +805,8 @@ gap:10px
 <h2>📋 Screening History</h2>
 
 <button
-class="clear-btn"
-onclick="clearHistory()">
+onclick="clearHistory()"
+style="background:#6b7280">
 
 Clear History
 
@@ -732,7 +814,9 @@ Clear History
 
 </div>
 
+
 <br>
+
 
 <div style="overflow-x:auto">
 
@@ -753,11 +837,13 @@ Clear History
 
 </thead>
 
+
 <tbody id="history"></tbody>
 
 </table>
 
 </div>
+
 
 <p
 id="emptyHistory"
@@ -774,58 +860,101 @@ No screening cases yet.
 </div>
 
 
-<!-- FEATURES -->
+<!-- =====================================================
+FEATURES
+===================================================== -->
 
 <div class="card">
 
 <h2>🔐 Verification Features</h2>
 
+
 <div class="info">
+
 <b>1. Image Quality Check</b>
+
 <br>
+
 Checks whether the document image is readable.
+
 </div>
 
+
 <div class="info">
+
 <b>2. OCR Text Extraction</b>
+
 <br>
+
 Extracts text from the uploaded document.
+
 </div>
 
+
 <div class="info">
+
 <b>3. Document Type Detection</b>
+
 <br>
+
 Identifies the likely document type.
+
 </div>
 
+
 <div class="info">
+
 <b>4. Document Type Matching</b>
+
 <br>
+
 Checks selected type against detected type.
+
 </div>
 
+
 <div class="info">
+
 <b>5. Mandatory Field Validation</b>
+
 <br>
+
 Checks document-specific formats.
+
 </div>
 
+
 <div class="info">
+
 <b>6. Date Validation</b>
+
 <br>
+
 Checks DOB and optional expiry date.
+
 </div>
 
+
 <div class="info">
+
 <b>7. Identity Name & DOB Matching</b>
+
 <br>
-Compares applicant Name and DOB with information extracted from the document.
+
+Compares applicant Name and DOB with
+information extracted from the document.
+
 </div>
 
+
 <div class="info">
+
 <b>8. Risk Score</b>
+
 <br>
+
 Generates a risk score and screening status.
+
 </div>
 
 </div>
@@ -855,6 +984,7 @@ Generates a risk score and screening status.
 
 </div>
 
+
 </div>
 
 
@@ -871,11 +1001,19 @@ ALPHA SQUAD
 
 <script>
 
+
 /* =====================================================
-   DOCUMENT PATTERNS
+DOCUMENT PATTERNS
 ===================================================== */
 
 const documentPatterns = {
+
+"Aadhaar Card":[
+"aadhaar",
+"uidai",
+"unique identification",
+"government of india"
+],
 
 "Passport":[
 "passport",
@@ -892,18 +1030,10 @@ const documentPatterns = {
 "valid for"
 ],
 
-"Aadhaar Card":[
-"aadhaar",
-"uidai",
-"unique identification",
-"government of india"
-],
-
 "PAN Card":[
 "permanent account number",
 "income tax department",
-"income tax",
-"pan"
+"income tax"
 ],
 
 "Driving Licence":[
@@ -943,8 +1073,7 @@ const documentPatterns = {
 "student id",
 "student card",
 "university",
-"college",
-"student"
+"college"
 ],
 
 "Government ID":[
@@ -956,7 +1085,7 @@ const documentPatterns = {
 
 
 /* =====================================================
-   LOGIN
+LOGIN
 ===================================================== */
 
 function login(){
@@ -966,6 +1095,7 @@ document.getElementById("officerID").value.trim();
 
 const password =
 document.getElementById("password").value;
+
 
 if(
 id === "OFF001" &&
@@ -1002,7 +1132,7 @@ alert(
 
 
 /* =====================================================
-   LOGOUT
+LOGOUT
 ===================================================== */
 
 function logout(){
@@ -1013,13 +1143,14 @@ location.reload();
 
 
 /* =====================================================
-   START SCREENING
+START SCREENING
 ===================================================== */
 
 async function startScreening(){
 
 const file =
-document.getElementById("documentFile").files[0];
+document.getElementById("documentFile")
+.files[0];
 
 const applicant =
 document.getElementById("applicantName")
@@ -1027,19 +1158,22 @@ document.getElementById("applicantName")
 .trim();
 
 const dob =
-document.getElementById("dateOfBirth").value;
+document.getElementById("dateOfBirth")
+.value;
 
 const expiry =
-document.getElementById("expiryDate").value;
+document.getElementById("expiryDate")
+.value;
 
 const selectedType =
-document.getElementById("documentType").value;
+document.getElementById("documentType")
+.value;
 
 
 if(
 !file ||
-applicant === "" ||
-dob === ""
+!applicant ||
+!dob
 ){
 
 alert(
@@ -1055,32 +1189,38 @@ document
 .getElementById("screening")
 .classList.remove("hidden");
 
+
 document
 .getElementById("result")
 .style.display = "none";
+
 
 document
 .getElementById("ocrSection")
 .classList.add("hidden");
 
+
 document
 .getElementById("documentMatch")
 .innerHTML = "";
+
 
 document
 .getElementById("fieldValidation")
 .innerHTML = "";
 
+
 document
 .getElementById("identityValidation")
 .innerHTML = "";
+
 
 resetStages();
 
 
 /* 1 */
 
-await wait(400);
+await wait(300);
 
 const quality =
 checkImageQuality(file);
@@ -1095,19 +1235,22 @@ setProgress(10);
 
 /* 2 */
 
-await wait(400);
+await wait(300);
 
 const ocr =
 await runOCR(file);
+
 
 document
 .getElementById("ocrSection")
 .classList.remove("hidden");
 
+
 document
 .getElementById("ocrText")
 .innerText =
 ocr;
+
 
 complete(
 2,
@@ -1119,7 +1262,7 @@ setProgress(25);
 
 /* 3 */
 
-await wait(400);
+await wait(300);
 
 const detected =
 detectDocumentType(ocr);
@@ -1134,35 +1277,27 @@ setProgress(38);
 
 /* 4 */
 
-await wait(400);
+await wait(300);
 
-const match =
+const typeMatch =
 compareDocumentTypes(
 selectedType,
 detected.type
 );
 
-updateMatchDisplay(match);
+updateMatchDisplay(typeMatch);
 
 complete(
 4,
-match.message
+typeMatch.message
 );
-
-if(match.mismatch){
-
-document
-.getElementById("s4")
-.classList.add("mismatch-stage");
-
-}
 
 setProgress(50);
 
 
 /* 5 */
 
-await wait(400);
+await wait(300);
 
 const field =
 validateDocumentFields(
@@ -1177,20 +1312,12 @@ complete(
 field.message
 );
 
-if(field.risk){
-
-document
-.getElementById("s5")
-.classList.add("invalid-stage");
-
-}
-
 setProgress(63);
 
 
 /* 6 */
 
-await wait(400);
+await wait(300);
 
 const date =
 validateDates(
@@ -1203,20 +1330,10 @@ complete(
 date.message
 );
 
-if(date.risk){
-
-document
-.getElementById("s6")
-.classList.add("invalid-stage");
-
-}
-
 setProgress(75);
 
 
-/* =====================================================
-   7 NAME + DOB
-===================================================== */
+/* 7 */
 
 await wait(500);
 
@@ -1227,41 +1344,51 @@ dob,
 ocr
 );
 
-displayIdentityValidation(identity);
+
+displayIdentityValidation(
+identity
+);
+
 
 complete(
 7,
 identity.message
 );
 
+
 if(identity.risk){
 
 document
 .getElementById("s7")
-.classList.add("mismatch-stage");
+.classList.add(
+"mismatch-stage"
+);
 
 }
+
 
 setProgress(88);
 
 
 /* 8 */
 
-await wait(500);
+await wait(300);
 
 const risk =
 calculateRisk(
 quality,
-match,
+typeMatch,
 field,
 date,
 identity
 );
 
+
 complete(
 8,
 "Risk score calculated"
 );
+
 
 setProgress(100);
 
@@ -1273,7 +1400,7 @@ detected.type,
 applicant,
 dob,
 expiry,
-match,
+typeMatch,
 field,
 identity
 );
@@ -1282,32 +1409,271 @@ identity
 
 
 /* =====================================================
-   OCR
+IMAGE LOAD
+===================================================== */
+
+function loadImage(file){
+
+return new Promise(
+(resolve,reject)=>{
+
+const reader =
+new FileReader();
+
+
+reader.onload =
+function(e){
+
+const img =
+new Image();
+
+
+img.onload =
+function(){
+
+resolve(img);
+
+};
+
+
+img.onerror =
+reject;
+
+
+img.src =
+e.target.result;
+
+};
+
+
+reader.onerror =
+reject;
+
+
+reader.readAsDataURL(file);
+
+});
+
+}
+
+
+/* =====================================================
+CREATE OCR CANVAS
+===================================================== */
+
+function createOCRCanvas(
+image,
+contrast = 1,
+grayscale = false
+){
+
+const canvas =
+document.createElement("canvas");
+
+
+const maxWidth = 2200;
+
+
+let width =
+image.width;
+
+let height =
+image.height;
+
+
+if(width > maxWidth){
+
+const ratio =
+maxWidth / width;
+
+width =
+Math.round(width * ratio);
+
+height =
+Math.round(height * ratio);
+
+}
+
+
+canvas.width =
+width;
+
+canvas.height =
+height;
+
+
+const ctx =
+canvas.getContext("2d");
+
+
+ctx.drawImage(
+image,
+0,
+0,
+width,
+height
+);
+
+
+const imageData =
+ctx.getImageData(
+0,
+0,
+width,
+height
+);
+
+
+const data =
+imageData.data;
+
+
+for(
+let i=0;
+i<data.length;
+i+=4
+){
+
+let r =
+data[i];
+
+let g =
+data[i+1];
+
+let b =
+data[i+2];
+
+
+if(grayscale){
+
+let gray =
+0.299*r +
+0.587*g +
+0.114*b;
+
+
+gray =
+((gray - 128) * contrast) + 128;
+
+
+gray =
+Math.max(
+0,
+Math.min(
+255,
+gray
+)
+);
+
+
+data[i] =
+gray;
+
+data[i+1] =
+gray;
+
+data[i+2] =
+gray;
+
+}
+
+}
+
+
+ctx.putImageData(
+imageData,
+0,
+0
+);
+
+
+return canvas;
+
+}
+
+
+/* =====================================================
+OCR
 ===================================================== */
 
 async function runOCR(file){
 
 const output =
-document.getElementById("ocrText");
+document.getElementById(
+"ocrText"
+);
+
 
 output.innerText =
-"Reading document...";
+"Preparing OCR...";
+
 
 try{
 
-const result =
-await Tesseract.recognize(
-file,
-"eng",
-{
-logger:info=>{
+const image =
+await loadImage(file);
 
-if(
-info.status === "recognizing text"
+
+/*
+Run OCR using several versions
+of the same image.
+*/
+
+const versions = [
+
+createOCRCanvas(
+image,
+1,
+false
+),
+
+createOCRCanvas(
+image,
+1.4,
+true
+),
+
+createOCRCanvas(
+image,
+2,
+true
+)
+
+];
+
+
+let allText = "";
+
+
+for(
+let i=0;
+i<versions.length;
+i++
 ){
 
 output.innerText =
-"Extracting OCR... " +
+"OCR pass " +
+(i+1) +
+" of 3...";
+
+
+const result =
+await Tesseract.recognize(
+versions[i],
+"eng",
+{
+
+logger:function(info){
+
+if(
+info.status ===
+"recognizing text"
+){
+
+output.innerText =
+"OCR pass " +
+(i+1) +
+" of 3: " +
 Math.round(
 info.progress * 100
 ) +
@@ -1316,14 +1682,21 @@ info.progress * 100
 }
 
 }
+
 }
 );
 
-return result.data.text ||
-"No readable text detected.";
+
+allText +=
+"\n\n" +
+result.data.text;
 
 }
 
+
+return allText;
+
+}
 catch(error){
 
 console.error(error);
@@ -1336,7 +1709,7 @@ return "OCR failed.";
 
 
 /* =====================================================
-   IMAGE QUALITY
+IMAGE QUALITY
 ===================================================== */
 
 function checkImageQuality(file){
@@ -1344,22 +1717,31 @@ function checkImageQuality(file){
 if(file.size < 15000){
 
 return {
+
 risk:true,
-message:"Low image quality"
+
+message:
+"Low image quality"
+
 };
 
 }
 
+
 return {
+
 risk:false,
-message:"Image quality acceptable"
+
+message:
+"Image quality acceptable"
+
 };
 
 }
 
 
 /* =====================================================
-   DOCUMENT TYPE
+DOCUMENT DETECTION
 ===================================================== */
 
 function detectDocumentType(ocr){
@@ -1369,8 +1751,11 @@ ocr
 .toLowerCase()
 .replace(/\s+/g," ");
 
+
 let bestType = null;
+
 let bestScore = 0;
+
 
 for(
 const type in documentPatterns
@@ -1378,8 +1763,10 @@ const type in documentPatterns
 
 let score = 0;
 
+
 for(
-const keyword of documentPatterns[type]
+const keyword of
+documentPatterns[type]
 ){
 
 if(
@@ -1394,34 +1781,51 @@ score++;
 
 }
 
-if(score > bestScore){
 
-bestScore = score;
-bestType = type;
+if(
+score > bestScore
+){
+
+bestScore =
+score;
+
+bestType =
+type;
 
 }
 
 }
 
-if(bestScore === 0){
+
+if(!bestType){
 
 return {
+
 type:null,
-message:"Document type not recognized"
+
+message:
+"Document type not recognized"
+
 };
 
 }
 
+
 return {
+
 type:bestType,
-message:"Detected: " + bestType
+
+message:
+"Detected: " +
+bestType
+
 };
 
 }
 
 
 /* =====================================================
-   DOCUMENT TYPE MATCH
+DOCUMENT TYPE MATCH
 ===================================================== */
 
 function compareDocumentTypes(
@@ -1432,44 +1836,67 @@ detected
 if(!detected){
 
 return {
+
 mismatch:false,
+
 unknown:true,
-message:"Type cannot be confirmed"
+
+message:
+"Type cannot be confirmed"
+
 };
 
 }
+
 
 if(selected === "Other"){
 
 return {
+
 mismatch:false,
+
 unknown:false,
-message:"Manual classification selected"
+
+message:
+"Manual classification selected"
+
 };
 
 }
+
 
 if(selected === detected){
 
 return {
+
 mismatch:false,
+
 unknown:false,
-message:"Document type matches"
+
+message:
+"Document type matched"
+
 };
 
 }
 
+
 return {
+
 mismatch:true,
+
 unknown:false,
-message:"Mismatch detected"
+
+message:
+"Document type mismatch"
+
 };
 
 }
 
 
 /* =====================================================
-   DOCUMENT MATCH DISPLAY
+DOCUMENT DISPLAY
 ===================================================== */
 
 function updateMatchDisplay(match){
@@ -1479,13 +1906,14 @@ document.getElementById(
 "documentMatch"
 );
 
+
 if(match.mismatch){
 
 box.innerHTML = `
 
 <div class="mismatch-box">
 
-⚠️ DOCUMENT TYPE MISMATCH
+❌ DOCUMENT TYPE MISMATCH
 
 </div>
 
@@ -1523,7 +1951,7 @@ box.innerHTML = `
 
 
 /* =====================================================
-   FIELD VALIDATION
+FIELD VALIDATION
 ===================================================== */
 
 function validateDocumentFields(
@@ -1534,12 +1962,16 @@ ocr
 const text =
 ocr.toUpperCase();
 
+
 let result = {
 
-valid:true,
 risk:false,
-message:"Mandatory fields valid",
-finding:""
+
+message:
+"Mandatory fields valid",
+
+finding:
+""
 
 };
 
@@ -1551,10 +1983,11 @@ text.match(
 /\d{4}[\s-]?\d{4}[\s-]?\d{4}/
 );
 
+
 if(!aadhaar){
 
-result.valid = false;
-result.risk = true;
+result.risk =
+true;
 
 result.message =
 "Aadhaar validation failed";
@@ -1580,10 +2013,11 @@ text.match(
 /\b[A-Z]{5}[0-9]{4}[A-Z]\b/
 );
 
+
 if(!pan){
 
-result.valid = false;
-result.risk = true;
+result.risk =
+true;
 
 result.message =
 "PAN validation failed";
@@ -1595,7 +2029,7 @@ result.finding =
 else{
 
 result.finding =
-"✓ PAN format is valid.";
+"✓ PAN format detected.";
 
 }
 
@@ -1616,15 +2050,18 @@ return result;
 
 
 /* =====================================================
-   FIELD DISPLAY
+FIELD DISPLAY
 ===================================================== */
 
-function updateFieldValidation(result){
+function updateFieldValidation(
+result
+){
 
 const box =
 document.getElementById(
 "fieldValidation"
 );
+
 
 if(result.risk){
 
@@ -1632,7 +2069,7 @@ box.innerHTML = `
 
 <div class="mismatch-box">
 
-⚠️ MANDATORY FIELD VALIDATION FAILED
+❌ MANDATORY FIELD VALIDATION FAILED
 
 <br><br>
 
@@ -1665,7 +2102,7 @@ ${result.finding}
 
 
 /* =====================================================
-   DATE VALIDATION
+DATE VALIDATION
 ===================================================== */
 
 function validateDates(
@@ -1679,46 +2116,71 @@ new Date();
 const birth =
 new Date(dob);
 
-if(birth >= today){
+
+if(
+birth >= today
+){
 
 return {
+
 risk:true,
-message:"Invalid DOB"
+
+message:
+"Invalid DOB"
+
 };
 
 }
 
-if(expiry === ""){
+
+if(!expiry){
 
 return {
+
 risk:false,
-message:"DOB valid"
+
+message:
+"DOB valid"
+
 };
 
 }
+
 
 const expiryDate =
 new Date(expiry);
 
-if(expiryDate < today){
+
+if(
+expiryDate < today
+){
 
 return {
+
 risk:true,
-message:"Expiry date has passed"
+
+message:
+"Expiry date has passed"
+
 };
 
 }
 
+
 return {
+
 risk:false,
-message:"DOB and expiry valid"
+
+message:
+"DOB and expiry valid"
+
 };
 
 }
 
 
 /* =====================================================
-   ⭐ NAME NORMALIZATION
+NAME NORMALIZATION
 ===================================================== */
 
 function normalizeName(name){
@@ -1729,31 +2191,30 @@ return "";
 
 }
 
-/*
-
-These all become:
-
-NJEYASHREE
-
-N.Jeya Shree
-N Jeya Shree
-N.JeyaShree
-N-Jeya-Shree
-
-*/
 
 return String(name)
+
 .toUpperCase()
+
 .normalize("NFD")
-.replace(/[\u0300-\u036f]/g,"")
-.replace(/[^A-Z]/g,"")
+
+.replace(
+/[\u0300-\u036f]/g,
+""
+)
+
+.replace(
+/[^A-Z]/g,
+""
+)
+
 .trim();
 
 }
 
 
 /* =====================================================
-   ⭐ DOB NORMALIZATION
+DOB NORMALIZATION
 ===================================================== */
 
 function normalizeDOB(dob){
@@ -1764,58 +2225,62 @@ return "";
 
 }
 
+
 let value =
 String(dob)
 .trim()
 .replace(/[.\-]/g,"/");
 
 
-/* YYYY/MM/DD */
-
 let match =
 value.match(
 /^(\d{4})\/(\d{1,2})\/(\d{1,2})$/
 );
 
+
 if(match){
 
 return (
-match[3].padStart(2,"0")
-+
-"/"
-+
-match[2].padStart(2,"0")
-+
-"/"
-+
+
+match[3].padStart(2,"0") +
+
+"/" +
+
+match[2].padStart(2,"0") +
+
+"/" +
+
 match[1]
+
 );
 
 }
 
-
-/* DD/MM/YYYY */
 
 match =
 value.match(
 /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/
 );
 
+
 if(match){
 
 return (
-match[1].padStart(2,"0")
-+
-"/"
-+
-match[2].padStart(2,"0")
-+
-"/"
-+
+
+match[1].padStart(2,"0") +
+
+"/" +
+
+match[2].padStart(2,"0") +
+
+"/" +
+
 match[3]
+
 );
 
 }
+
 
 return value;
 
@@ -1823,7 +2288,7 @@ return value;
 
 
 /* =====================================================
-   ⭐ EXTRACT DOB
+EXTRACT DOB
 ===================================================== */
 
 function extractDOB(ocr){
@@ -1834,14 +2299,10 @@ return null;
 
 }
 
-const text =
-String(ocr);
-
-
-/* Search DOB line first */
 
 const lines =
-text.split(/\r?\n/);
+String(ocr)
+.split(/\r?\n/);
 
 
 for(
@@ -1851,14 +2312,14 @@ const line of lines
 if(
 /DOB/i.test(line) ||
 /DATE\s*OF\s*BIRTH/i.test(line) ||
-/BIRTH/i.test(line) ||
-/பிறந்த/i.test(line)
+/BIRTH/i.test(line)
 ){
 
 const match =
 line.match(
 /\d{1,2}[\/.\-]\d{1,2}[\/.\-]\d{4}/
 );
+
 
 if(match){
 
@@ -1871,254 +2332,34 @@ return match[0];
 }
 
 
-/* Search any date */
-
 const dates =
-text.match(
+String(ocr).match(
 /\b\d{1,2}[\/.\-]\d{1,2}[\/.\-]\d{4}\b/g
 );
 
+
 if(
 dates &&
-dates.length > 0
+dates.length
 ){
 
 return dates[0];
 
 }
 
-return null;
-
-}
-
-
-/* =====================================================
-   ⭐ EXTRACT NAME
-===================================================== */
-
-function extractName(ocr){
-
-if(!ocr){
 
 return null;
 
 }
 
-const lines =
-String(ocr)
-.split(/\r?\n/)
-.map(
-x =>
-x
-.replace(/[|]/g," ")
-.replace(/\s+/g," ")
-.trim()
-)
-.filter(
-x => x.length > 0
-);
-
 
 /* =====================================================
-   METHOD 1
-   NAME: N Jeya Shree
+CLEAN NAME
 ===================================================== */
 
-for(
-const line of lines
+function cleanNameCandidate(
+value
 ){
-
-const match =
-line.match(
-/(?:FULL\s+NAME|NAME)\s*[:\-]\s*(.+)$/i
-);
-
-if(match){
-
-const name =
-cleanNameCandidate(
-match[1]
-);
-
-if(
-isNameCandidate(name)
-){
-
-return name;
-
-}
-
-}
-
-}
-
-
-/* =====================================================
-   METHOD 2
-   Aadhaar:
-
-   To
-   N Jeya Shree
-   D/O: ...
-===================================================== */
-
-for(
-let i=0;
-i<lines.length;
-i++
-){
-
-const cleanLine =
-lines[i]
-.replace(
-/[^A-Za-z]/g,
-""
-)
-.toUpperCase();
-
-
-if(cleanLine === "TO"){
-
-for(
-let j=i+1;
-j<
-Math.min(
-i+4,
-lines.length
-);
-j++
-){
-
-const name =
-cleanNameCandidate(
-lines[j]
-);
-
-if(
-isNameCandidate(name)
-){
-
-return name;
-
-}
-
-}
-
-}
-
-}
-
-
-/* =====================================================
-   METHOD 3
-   Name before DOB
-===================================================== */
-
-for(
-let i=0;
-i<lines.length;
-i++
-){
-
-if(
-/DOB/i.test(lines[i]) ||
-/DATE\s*OF\s*BIRTH/i.test(lines[i]) ||
-/BIRTH/i.test(lines[i]) ||
-/பிறந்த/i.test(lines[i])
-){
-
-/* Previous line */
-
-if(i > 0){
-
-const previous =
-cleanNameCandidate(
-lines[i-1]
-);
-
-if(
-isNameCandidate(previous)
-){
-
-return previous;
-
-}
-
-}
-
-
-/* Same line */
-
-const sameLine =
-lines[i].match(
-/^(.+?)\s+(?:DOB|DATE\s*OF\s*BIRTH)\s*[:\-]?/i
-);
-
-if(sameLine){
-
-const name =
-cleanNameCandidate(
-sameLine[1]
-);
-
-if(
-isNameCandidate(name)
-){
-
-return name;
-
-}
-
-}
-
-}
-
-}
-
-
-/* =====================================================
-   METHOD 4
-   Search possible names
-===================================================== */
-
-for(
-const line of lines
-){
-
-const name =
-cleanNameCandidate(line);
-
-if(
-isNameCandidate(name)
-){
-
-const words =
-name.split(/\s+/);
-
-if(
-words.length >= 1 &&
-words.length <= 5
-){
-
-return name;
-
-}
-
-}
-
-}
-
-
-return null;
-
-}
-
-
-/* =====================================================
-   CLEAN NAME
-===================================================== */
-
-function cleanNameCandidate(value){
 
 if(!value){
 
@@ -2126,11 +2367,10 @@ return "";
 
 }
 
+
 let name =
 String(value);
 
-
-/* Remove DOB */
 
 name =
 name.replace(
@@ -2139,16 +2379,12 @@ name.replace(
 );
 
 
-/* Remove NAME */
-
 name =
 name.replace(
 /^(NAME|FULL\s+NAME)\s*[:\-]?\s*/i,
 ""
 );
 
-
-/* Keep letters, spaces, dot and hyphen */
 
 name =
 name.replace(
@@ -2170,7 +2406,7 @@ return name.trim();
 
 
 /* =====================================================
-   CHECK NAME
+NAME CANDIDATE
 ===================================================== */
 
 function isNameCandidate(name){
@@ -2181,11 +2417,13 @@ return false;
 
 }
 
+
 const normalized =
 normalizeName(name);
 
+
 if(
-normalized.length < 3
+normalized.length < 5
 ){
 
 return false;
@@ -2203,14 +2441,24 @@ const blocked = [
 "AUTHORITY",
 "DATEOFBIRTH",
 "BIRTH",
-"DOB",
 "MALE",
 "FEMALE",
 "ADDRESS",
 "MOBILE",
+"ENROLMENT",
+"ENROLLMENT",
+"SIGNATURE",
 "VID",
 "YEAR",
-"INDIAN"
+"PINCODE",
+"DISTRICT",
+"STATE",
+"TAMILNADU",
+"VIRUDHUNAGAR",
+"SIVAKASI",
+"THIRUTHANGAL",
+"THIRUTHANGAL",
+"RAMUSANTHU"
 
 ];
 
@@ -2230,13 +2478,461 @@ return false;
 }
 
 
-return /[A-Za-z]{2,}/.test(name);
+return true;
 
 }
 
 
 /* =====================================================
-   ⭐ FINAL IDENTITY MATCH
+EXTRACT POSSIBLE NAMES
+===================================================== */
+
+function extractNameCandidates(
+ocr
+){
+
+if(!ocr){
+
+return [];
+
+}
+
+
+const lines =
+String(ocr)
+.split(/\r?\n/)
+.map(
+line =>
+line
+.replace(/[|]/g," ")
+.replace(/\s+/g," ")
+.trim()
+)
+.filter(
+line => line.length > 0
+);
+
+
+const candidates = [];
+
+
+/* NAME: XXXXX */
+
+for(
+let i=0;
+i<lines.length;
+i++
+){
+
+const match =
+lines[i].match(
+/(?:FULL\s+NAME|NAME)\s*[:\-]\s*(.+)$/i
+);
+
+
+if(match){
+
+const candidate =
+cleanNameCandidate(
+match[1]
+);
+
+
+if(
+isNameCandidate(candidate)
+){
+
+candidates.push(candidate);
+
+}
+
+}
+
+}
+
+
+/* TO -> name */
+
+for(
+let i=0;
+i<lines.length;
+i++
+){
+
+const current =
+lines[i]
+.replace(
+/[^A-Za-z]/g,
+""
+)
+.toUpperCase();
+
+
+if(current === "TO"){
+
+for(
+let j=i+1;
+j<Math.min(
+i+5,
+lines.length
+);
+j++
+){
+
+const candidate =
+cleanNameCandidate(
+lines[j]
+);
+
+
+if(
+isNameCandidate(candidate)
+){
+
+candidates.push(candidate);
+
+}
+
+}
+
+}
+
+}
+
+
+/* Name before DOB */
+
+for(
+let i=0;
+i<lines.length;
+i++
+){
+
+if(
+/DOB/i.test(lines[i]) ||
+/DATE\s*OF\s*BIRTH/i.test(lines[i])
+){
+
+if(i > 0){
+
+const candidate =
+cleanNameCandidate(
+lines[i-1]
+);
+
+
+if(
+isNameCandidate(candidate)
+){
+
+candidates.push(candidate);
+
+}
+
+}
+
+
+const sameLine =
+lines[i].match(
+/^(.+?)\s+(?:DOB|DATE\s*OF\s*BIRTH)/i
+);
+
+
+if(sameLine){
+
+const candidate =
+cleanNameCandidate(
+sameLine[1]
+);
+
+
+if(
+isNameCandidate(candidate)
+){
+
+candidates.push(candidate);
+
+}
+
+}
+
+}
+
+}
+
+
+/* Every reasonable line */
+
+for(
+const line of lines
+){
+
+const candidate =
+cleanNameCandidate(line);
+
+
+if(
+isNameCandidate(candidate)
+){
+
+candidates.push(candidate);
+
+}
+
+}
+
+
+/* Remove duplicates */
+
+return [
+...new Set(
+candidates
+.map(x => x.trim())
+.filter(Boolean)
+)
+];
+
+}
+
+
+/* =====================================================
+FUZZY NAME SIMILARITY
+===================================================== */
+
+function levenshtein(a,b){
+
+const matrix = [];
+
+
+for(
+let i=0;
+i<=b.length;
+i++
+){
+
+matrix[i] = [i];
+
+}
+
+
+for(
+let j=0;
+j<=a.length;
+j++
+){
+
+matrix[0][j] = j;
+
+}
+
+
+for(
+let i=1;
+i<=b.length;
+i++
+){
+
+for(
+let j=1;
+j<=a.length;
+j++
+){
+
+if(
+b.charAt(i-1) ===
+a.charAt(j-1)
+){
+
+matrix[i][j] =
+matrix[i-1][j-1];
+
+}
+else{
+
+matrix[i][j] =
+Math.min(
+
+matrix[i-1][j] + 1,
+
+matrix[i][j-1] + 1,
+
+matrix[i-1][j-1] + 1
+
+);
+
+}
+
+}
+
+}
+
+
+return matrix[b.length][a.length];
+
+}
+
+
+function nameSimilarity(
+a,
+b
+){
+
+const x =
+normalizeName(a);
+
+const y =
+normalizeName(b);
+
+
+if(!x || !y){
+
+return 0;
+
+}
+
+
+if(x === y){
+
+return 1;
+
+}
+
+
+if(
+x.includes(y) ||
+y.includes(x)
+){
+
+return 0.92;
+
+}
+
+
+const distance =
+levenshtein(x,y);
+
+
+return (
+1 -
+distance /
+Math.max(
+x.length,
+y.length
+)
+);
+
+}
+
+
+/* =====================================================
+FIND BEST DOCUMENT NAME
+===================================================== */
+
+function findBestName(
+applicant,
+ocr
+){
+
+const candidates =
+extractNameCandidates(ocr);
+
+
+let bestName = null;
+
+let bestScore = 0;
+
+
+for(
+const candidate of candidates
+){
+
+const score =
+nameSimilarity(
+applicant,
+candidate
+);
+
+
+if(
+score > bestScore
+){
+
+bestScore =
+score;
+
+bestName =
+candidate;
+
+}
+
+}
+
+
+console.log(
+"Applicant:",
+applicant
+);
+
+console.log(
+"OCR Name Candidates:",
+candidates
+);
+
+console.log(
+"Best OCR Name:",
+bestName
+);
+
+console.log(
+"Best Similarity:",
+bestScore
+);
+
+
+/*
+Require a strong match.
+
+This prevents something like:
+
+Ahalya
+
+from matching:
+
+N Jeya Shree
+*/
+
+if(
+bestScore >= 0.75
+){
+
+return {
+
+name:bestName,
+
+score:bestScore,
+
+matched:true
+
+};
+
+}
+
+
+return {
+
+name:bestName,
+
+score:bestScore,
+
+matched:false
+
+};
+
+}
+
+
+/* =====================================================
+IDENTITY COMPARISON
 ===================================================== */
 
 function compareIdentityDetails(
@@ -2245,24 +2941,15 @@ applicantDOB,
 ocr
 ){
 
-const documentName =
-extractName(ocr);
+const best =
+findBestName(
+applicantName,
+ocr
+);
+
 
 const documentDOB =
 extractDOB(ocr);
-
-
-/* Normalize */
-
-const enteredName =
-normalizeName(
-applicantName
-);
-
-const extractedName =
-normalizeName(
-documentName
-);
 
 
 const enteredDOB =
@@ -2270,35 +2957,16 @@ normalizeDOB(
 applicantDOB
 );
 
+
 const extractedDOB =
 normalizeDOB(
 documentDOB
 );
 
 
-/* =================================================
-   NAME MATCH
-================================================= */
+const nameMatch =
+best.matched;
 
-let nameMatch = false;
-
-
-/* Exact normalized match */
-
-if(
-enteredName &&
-extractedName &&
-enteredName === extractedName
-){
-
-nameMatch = true;
-
-}
-
-
-/* =================================================
-   DOB MATCH
-================================================= */
 
 const dobMatch =
 enteredDOB !== "" &&
@@ -2306,11 +2974,8 @@ extractedDOB !== "" &&
 enteredDOB === extractedDOB;
 
 
-/* =================================================
-   MESSAGE
-================================================= */
+let message;
 
-let message = "";
 
 if(
 nameMatch &&
@@ -2346,39 +3011,32 @@ message =
 }
 
 
-/* DEBUG */
-
 console.log(
 "========== IDENTITY CHECK =========="
 );
 
 console.log(
-"Applicant Name:",
+"Entered Name:",
 applicantName
 );
 
 console.log(
 "Document Name:",
-documentName
+best.name
 );
 
 console.log(
-"Normalized Applicant:",
-enteredName
+"Name Similarity:",
+best.score
 );
 
 console.log(
-"Normalized Document:",
-extractedName
-);
-
-console.log(
-"NAME MATCH:",
+"Name Match:",
 nameMatch
 );
 
 console.log(
-"Applicant DOB:",
+"Entered DOB:",
 enteredDOB
 );
 
@@ -2388,7 +3046,7 @@ extractedDOB
 );
 
 console.log(
-"DOB MATCH:",
+"DOB Match:",
 dobMatch
 );
 
@@ -2403,16 +3061,19 @@ enteredName:
 applicantName,
 
 documentName:
-documentName,
+best.name,
+
+nameScore:
+best.score,
+
+nameMatch:
+nameMatch,
 
 enteredDOB:
 enteredDOB,
 
 documentDOB:
 extractedDOB,
-
-nameMatch:
-nameMatch,
 
 dobMatch:
 dobMatch,
@@ -2430,7 +3091,7 @@ message
 
 
 /* =====================================================
-   IDENTITY DISPLAY
+IDENTITY DISPLAY
 ===================================================== */
 
 function displayIdentityValidation(
@@ -2484,22 +3145,31 @@ box.innerHTML = `
 <tr>
 
 <th>Field</th>
+
 <th>Entered</th>
+
 <th>Document</th>
+
 <th>Result</th>
 
 </tr>
 
 </thead>
 
+
 <tbody>
+
 
 <tr>
 
-<td><strong>Name</strong></td>
+<td>
+<strong>Name</strong>
+</td>
 
 <td>
-${escapeHTML(result.enteredName)}
+${escapeHTML(
+result.enteredName
+)}
 </td>
 
 <td>
@@ -2507,7 +3177,9 @@ ${escapeHTML(result.enteredName)}
 ${
 result.documentName
 ?
-escapeHTML(result.documentName)
+escapeHTML(
+result.documentName
+)
 :
 "Not detected"
 }
@@ -2523,10 +3195,14 @@ ${nameResult}
 
 <tr>
 
-<td><strong>Date of Birth</strong></td>
+<td>
+<strong>Date of Birth</strong>
+</td>
 
 <td>
-${escapeHTML(result.enteredDOB)}
+${escapeHTML(
+result.enteredDOB
+)}
 </td>
 
 <td>
@@ -2534,7 +3210,9 @@ ${escapeHTML(result.enteredDOB)}
 ${
 result.documentDOB
 ?
-escapeHTML(result.documentDOB)
+escapeHTML(
+result.documentDOB
+)
 :
 "Not detected"
 }
@@ -2547,9 +3225,36 @@ ${dobResult}
 
 </tr>
 
+
 </tbody>
 
 </table>
+
+
+${
+result.nameScore
+?
+
+`
+<br>
+
+<small>
+
+Name similarity:
+<strong>
+${Math.round(
+result.nameScore * 100
+)}%
+</strong>
+
+</small>
+`
+
+:
+
+""
+
+}
 
 </div>
 
@@ -2569,7 +3274,7 @@ result.dobMatch
 <br><br>
 
 Applicant Name and Date of Birth
-match the document.
+match the information detected in the document.
 
 </div>
 
@@ -2599,7 +3304,7 @@ Officer review required.
 
 
 /* =====================================================
-   ESCAPE HTML
+ESCAPE HTML
 ===================================================== */
 
 function escapeHTML(value){
@@ -2610,23 +3315,44 @@ return "";
 
 }
 
+
 return String(value)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
 
 /* =====================================================
-   RISK
+RISK SCORE
 ===================================================== */
 
 function calculateRisk(
 quality,
-match,
+typeMatch,
 field,
 date,
 identity
@@ -2636,25 +3362,35 @@ let score = 10;
 
 
 if(quality.risk){
+
 score += 10;
+
 }
 
 
-if(match.mismatch){
-score += 70;
+if(typeMatch.mismatch){
+
+score += 40;
+
 }
-else if(match.unknown){
-score += 20;
+else if(typeMatch.unknown){
+
+score += 10;
+
 }
 
 
 if(field.risk){
-score += 40;
+
+score += 20;
+
 }
 
 
 if(date.risk){
+
 score += 20;
+
 }
 
 
@@ -2663,7 +3399,7 @@ identity &&
 !identity.nameMatch
 ){
 
-score += 70;
+score += 50;
 
 }
 
@@ -2679,26 +3415,18 @@ score += 30;
 
 
 if(score > 100){
+
 score = 100;
+
 }
 
 
 let status;
+
 let recommendation;
 
 
-if(
-match.mismatch ||
-field.risk ||
-(
-identity &&
-(
-!identity.nameMatch ||
-!identity.dobMatch
-)
-) ||
-score >= 70
-){
+if(score >= 70){
 
 status =
 "HIGH RISK";
@@ -2742,7 +3470,7 @@ recommendation
 
 
 /* =====================================================
-   SHOW RESULT
+SHOW RESULT
 ===================================================== */
 
 function showResult(
@@ -2752,7 +3480,7 @@ detected,
 applicant,
 dob,
 expiry,
-match,
+typeMatch,
 field,
 identity
 ){
@@ -2762,6 +3490,7 @@ document.getElementById(
 "result"
 );
 
+
 result.className =
 "result";
 
@@ -2770,19 +3499,25 @@ if(
 data.status === "VERIFIED"
 ){
 
-result.classList.add("low");
+result.classList.add(
+"low"
+);
 
 }
 else if(
 data.status === "REVIEW REQUIRED"
 ){
 
-result.classList.add("medium");
+result.classList.add(
+"medium"
+);
 
 }
 else{
 
-result.classList.add("high");
+result.classList.add(
+"high"
+);
 
 }
 
@@ -2800,21 +3535,26 @@ const caseID =
 String(
 history.length + 1
 )
-.padStart(4,"0");
+.padStart(
+4,
+"0"
+);
 
 
 document.getElementById(
 "resultTitle"
 )
 .innerText =
-"🚨 " + data.status;
+"🚨 " +
+data.status;
 
 
 document.getElementById(
 "risk"
 )
 .innerText =
-data.score + "/100";
+data.score +
+"/100";
 
 
 document.getElementById(
@@ -2835,7 +3575,8 @@ document.getElementById(
 "detectedDoc"
 )
 .innerText =
-detected || "Unknown";
+detected ||
+"Unknown";
 
 
 document.getElementById(
@@ -2856,7 +3597,8 @@ document.getElementById(
 "resultExpiry"
 )
 .innerText =
-expiry || "Not provided";
+expiry ||
+"Not provided";
 
 
 document.getElementById(
@@ -2876,23 +3618,33 @@ data.recommendation;
 let findings = "";
 
 
-/* Document */
+/* Document type */
 
-if(match.mismatch){
+if(
+typeMatch.mismatch
+){
 
 findings += `
+
 <div class="finding">
+
 ❌ Document type mismatch detected.
+
 </div>
+
 `;
 
 }
 else{
 
 findings += `
+
 <div class="finding">
+
 ✓ Document type check completed.
+
 </div>
+
 `;
 
 }
@@ -2901,15 +3653,21 @@ findings += `
 /* Fields */
 
 findings += `
+
 <div class="finding">
+
 ${field.finding}
+
 </div>
+
 `;
 
 
-/* Name */
+/* NAME */
 
-if(identity.nameMatch){
+if(
+identity.nameMatch
+){
 
 findings += `
 
@@ -2920,15 +3678,31 @@ findings += `
 <br><br>
 
 Entered:
+
 <strong>
-${escapeHTML(identity.enteredName)}
+${escapeHTML(
+identity.enteredName
+)}
 </strong>
 
 <br>
 
 Document:
+
 <strong>
-${escapeHTML(identity.documentName)}
+${escapeHTML(
+identity.documentName
+)}
+</strong>
+
+<br><br>
+
+Similarity:
+
+<strong>
+${Math.round(
+identity.nameScore * 100
+)}%
 </strong>
 
 </div>
@@ -2947,22 +3721,38 @@ findings += `
 <br><br>
 
 Entered:
+
 <strong>
-${escapeHTML(identity.enteredName)}
+${escapeHTML(
+identity.enteredName
+)}
 </strong>
 
 <br>
 
 Document:
+
 <strong>
 ${
 identity.documentName
 ?
-escapeHTML(identity.documentName)
+escapeHTML(
+identity.documentName
+)
 :
 "Not detected"
 }
 
+</strong>
+
+<br><br>
+
+Similarity:
+
+<strong>
+${Math.round(
+identity.nameScore * 100
+)}%
 </strong>
 
 </div>
@@ -2974,7 +3764,9 @@ escapeHTML(identity.documentName)
 
 /* DOB */
 
-if(identity.dobMatch){
+if(
+identity.dobMatch
+){
 
 findings += `
 
@@ -3007,7 +3799,8 @@ findings += `
 <div class="finding">
 
 <strong>
-Risk Score: ${data.score}/100
+Risk Score:
+${data.score}/100
 </strong>
 
 </div>
@@ -3030,17 +3823,22 @@ applicant:applicant,
 
 selected:selected,
 
-detected:detected || "Unknown",
+detected:
+detected ||
+"Unknown",
 
 risk:data.score,
 
 status:data.status,
 
-nameMatch:identity.nameMatch,
+nameMatch:
+identity.nameMatch,
 
-dobMatch:identity.dobMatch,
+dobMatch:
+identity.dobMatch,
 
-time:new Date().toISOString()
+time:
+new Date().toISOString()
 
 });
 
@@ -3048,7 +3846,7 @@ time:new Date().toISOString()
 
 
 /* =====================================================
-   HISTORY
+HISTORY
 ===================================================== */
 
 function getHistory(){
@@ -3060,14 +3858,17 @@ localStorage.getItem(
 "screeningHistory"
 );
 
+
 if(!saved){
 
 return [];
 
 }
 
+
 const data =
 JSON.parse(saved);
+
 
 return Array.isArray(data)
 ?
@@ -3086,7 +3887,7 @@ return [];
 
 
 /* =====================================================
-   SAVE
+SAVE CASE
 ===================================================== */
 
 function saveCase(data){
@@ -3094,12 +3895,17 @@ function saveCase(data){
 const history =
 getHistory();
 
+
 history.push(data);
+
 
 localStorage.setItem(
 "screeningHistory",
-JSON.stringify(history)
+JSON.stringify(
+history
+)
 );
+
 
 loadDashboard();
 
@@ -3109,7 +3915,7 @@ loadHistory();
 
 
 /* =====================================================
-   DASHBOARD
+DASHBOARD
 ===================================================== */
 
 function loadDashboard(){
@@ -3118,38 +3924,54 @@ const history =
 getHistory();
 
 
-document.getElementById("total")
+document.getElementById(
+"total"
+)
 .innerText =
 history.length;
 
 
-document.getElementById("verified")
+document.getElementById(
+"verified"
+)
 .innerText =
 history.filter(
-x => x.status === "VERIFIED"
+x =>
+x.status ===
+"VERIFIED"
 ).length;
 
 
-document.getElementById("review")
+document.getElementById(
+"review"
+)
 .innerText =
 history.filter(
-x => x.status === "REVIEW REQUIRED"
+x =>
+x.status ===
+"REVIEW REQUIRED"
 ).length;
 
 
-document.getElementById("highRisk")
+document.getElementById(
+"highRisk"
+)
 .innerText =
 history.filter(
-x => x.status === "HIGH RISK"
+x =>
+x.status ===
+"HIGH RISK"
 ).length;
 
 
-const todayDate =
+const today =
 new Date()
 .toLocaleDateString();
 
 
-document.getElementById("today")
+document.getElementById(
+"today"
+)
 .innerText =
 history.filter(
 x =>
@@ -3157,14 +3979,14 @@ x.time &&
 new Date(x.time)
 .toLocaleDateString()
 ===
-todayDate
+today
 ).length;
 
 }
 
 
 /* =====================================================
-   LOAD HISTORY
+HISTORY TABLE
 ===================================================== */
 
 function loadHistory(){
@@ -3174,18 +3996,24 @@ document.getElementById(
 "history"
 );
 
+
 const empty =
 document.getElementById(
 "emptyHistory"
 );
 
-table.innerHTML = "";
+
+table.innerHTML =
+"";
+
 
 const history =
 getHistory();
 
 
-if(history.length === 0){
+if(
+history.length === 0
+){
 
 empty.style.display =
 "block";
@@ -3202,7 +4030,8 @@ empty.style.display =
 history
 .slice()
 .reverse()
-.forEach(item => {
+.forEach(
+item => {
 
 const row =
 table.insertRow();
@@ -3210,22 +4039,26 @@ table.insertRow();
 
 row.insertCell(0)
 .textContent =
-item.caseID || "-";
+item.caseID ||
+"-";
 
 
 row.insertCell(1)
 .textContent =
-item.applicant || "-";
+item.applicant ||
+"-";
 
 
 row.insertCell(2)
 .textContent =
-item.selected || "-";
+item.selected ||
+"-";
 
 
 row.insertCell(3)
 .textContent =
-item.detected || "-";
+item.detected ||
+"-";
 
 
 row.insertCell(4)
@@ -3243,12 +4076,14 @@ document.createElement(
 "span"
 );
 
+
 badge.className =
 "badge";
 
 
 if(
-item.status === "VERIFIED"
+item.status ===
+"VERIFIED"
 ){
 
 badge.classList.add(
@@ -3257,7 +4092,8 @@ badge.classList.add(
 
 }
 else if(
-item.status === "REVIEW REQUIRED"
+item.status ===
+"REVIEW REQUIRED"
 ){
 
 badge.classList.add(
@@ -3275,10 +4111,13 @@ badge.classList.add(
 
 
 badge.textContent =
-item.status || "UNKNOWN";
+item.status ||
+"UNKNOWN";
 
 
-cell.appendChild(badge);
+cell.appendChild(
+badge
+);
 
 });
 
@@ -3286,13 +4125,17 @@ cell.appendChild(badge);
 
 
 /* =====================================================
-   CLEAR HISTORY
+CLEAR HISTORY
 ===================================================== */
 
 function clearHistory(){
 
+const history =
+getHistory();
+
+
 if(
-getHistory().length === 0
+history.length === 0
 ){
 
 alert(
@@ -3314,6 +4157,7 @@ localStorage.removeItem(
 "screeningHistory"
 );
 
+
 loadDashboard();
 
 loadHistory();
@@ -3324,7 +4168,7 @@ loadHistory();
 
 
 /* =====================================================
-   RESET
+RESET STAGES
 ===================================================== */
 
 function resetStages(){
@@ -3340,8 +4184,10 @@ document.getElementById(
 "s"+i
 );
 
+
 stage.className =
 "stage";
+
 
 stage.children[1]
 .innerText =
@@ -3349,13 +4195,14 @@ stage.children[1]
 
 }
 
+
 setProgress(0);
 
 }
 
 
 /* =====================================================
-   COMPLETE
+COMPLETE STAGE
 ===================================================== */
 
 function complete(
@@ -3368,48 +4215,57 @@ document.getElementById(
 "s"+number
 );
 
+
 stage.classList.add(
 "done"
 );
 
+
 stage.children[1]
 .innerText =
-"✓ " + message;
+"✓ " +
+message;
 
 }
 
 
 /* =====================================================
-   PROGRESS
+PROGRESS
 ===================================================== */
 
-function setProgress(value){
+function setProgress(
+value
+){
 
 document.getElementById(
 "bar"
 )
 .style.width =
-value + "%";
+value +
+"%";
 
 }
 
 
 /* =====================================================
-   WAIT
+WAIT
 ===================================================== */
 
 function wait(ms){
 
 return new Promise(
 resolve =>
-setTimeout(resolve,ms)
+setTimeout(
+resolve,
+ms
+)
 );
 
 }
 
 
 /* =====================================================
-   PAGE LOAD
+PAGE LOAD
 ===================================================== */
 
 window.onload =
