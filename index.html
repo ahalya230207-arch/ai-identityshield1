@@ -1959,93 +1959,116 @@ type,
 ocr
 ){
 
-const text =
-ocr.toUpperCase();
-
+const text = String(ocr || "").toUpperCase();
 
 let result = {
-
 risk:false,
-
-message:
-"Mandatory fields valid",
-
-finding:
-""
-
+message:"Mandatory fields valid",
+finding:""
 };
 
+let checks=[];
+let failed=[];
+
+const datePattern = /\b(0?[1-9]|[12][0-9]|3[01])[\s./-](0?[1-9]|1[0-2])[\s./-](19|20)\d{2}\b/;
 
 if(type === "Aadhaar Card"){
 
-const aadhaar =
-text.match(
-/\d{4}[\s-]?\d{4}[\s-]?\d{4}/
-);
+const aadhaar = text.match(/\b\d{4}[\s-]?\d{4}[\s-]?\d{4}\b/);
 
+if(aadhaar && aadhaar[0].replace(/\D/g,"").length === 12)
+checks.push("✓ Aadhaar number detected (12 digits)");
+else
+failed.push("Aadhaar number not detected or invalid");
 
-if(!aadhaar){
+const dob=text.match(datePattern);
+if(dob)
+checks.push("✓ Date of birth detected: " + dob[0]);
+else
+failed.push("Date of birth not detected");
 
-result.risk =
-true;
-
-result.message =
-"Aadhaar validation failed";
-
-result.finding =
-"❌ Aadhaar number not detected.";
-
-}
-else{
-
-result.finding =
-"✓ Aadhaar number detected.";
+const markers=["NAME","DOB","DATE OF BIRTH","D/O","S/O","W/O","UIDAI","AADHAAR","UNIQUE IDENTIFICATION","GOVERNMENT OF INDIA"];
+if(markers.some(x=>text.includes(x)))
+checks.push("✓ Identity information detected");
+else
+failed.push("Identity/name information not detected");
 
 }
-
-}
-
-
 else if(type === "PAN Card"){
 
-const pan =
-text.match(
-/\b[A-Z]{5}[0-9]{4}[A-Z]\b/
-);
+const pan=text.match(/\b[A-Z]{5}[0-9]{4}[A-Z]\b/);
+if(pan) checks.push("✓ PAN number detected: " + pan[0]);
+else failed.push("PAN number not detected");
 
-
-if(!pan){
-
-result.risk =
-true;
-
-result.message =
-"PAN validation failed";
-
-result.finding =
-"❌ PAN format not detected.";
+if(text.includes("INCOME TAX") || text.includes("PERMANENT ACCOUNT NUMBER"))
+checks.push("✓ PAN document information detected");
+else failed.push("PAN document information not detected");
 
 }
-else{
+else if(type === "Passport"){
 
-result.finding =
-"✓ PAN format detected.";
+if(text.match(/\b[A-Z][0-9]{7}\b/)) checks.push("✓ Passport number detected");
+else failed.push("Passport number not detected");
 
-}
+if(text.includes("PASSPORT") || text.includes("REPUBLIC OF INDIA")) checks.push("✓ Passport identity information detected");
+else failed.push("Passport identity information not detected");
 
-}
-
-
-else{
-
-result.finding =
-"✓ Document fields detected.";
+if(text.match(datePattern)) checks.push("✓ Date information detected");
+else failed.push("Date information not detected");
 
 }
+else if(type === "Driving Licence"){
 
+if(text.includes("DRIVING") || text.includes("LICENCE") || text.includes("LICENSE")) checks.push("✓ Driving Licence information detected");
+else failed.push("Driving Licence information not detected");
+
+if(text.match(datePattern)) checks.push("✓ Date information detected");
+else failed.push("Date information not detected");
+
+}
+else if(type === "Voter ID"){
+if(text.includes("VOTER") || text.includes("ELECTION") || text.includes("EPIC")) checks.push("✓ Voter ID information detected");
+else failed.push("Voter ID information not detected");
+}
+else if(type === "Visa"){
+if(text.includes("VISA")) checks.push("✓ Visa information detected");
+else failed.push("Visa information not detected");
+}
+else if(type === "Residence Permit"){
+if(text.includes("RESIDENCE") || text.includes("RESIDENT")) checks.push("✓ Residence Permit information detected");
+else failed.push("Residence Permit information not detected");
+}
+else if(type === "Work Permit"){
+if(text.includes("WORK PERMIT") || text.includes("EMPLOYMENT")) checks.push("✓ Work Permit information detected");
+else failed.push("Work Permit information not detected");
+}
+else if(type === "Student ID"){
+if(text.includes("STUDENT") || text.includes("COLLEGE") || text.includes("UNIVERSITY")) checks.push("✓ Student/education information detected");
+else failed.push("Student/College/University information not detected");
+}
+else if(type === "Government ID"){
+if(text.includes("GOVERNMENT") || text.includes("IDENTITY") || text.includes("INDIA")) checks.push("✓ Government ID information detected");
+else failed.push("Government ID information not detected");
+}
+else if(type === "National ID"){
+if(text.includes("NATIONAL") || text.includes("IDENTITY") || text.includes("ID")) checks.push("✓ National ID information detected");
+else failed.push("National ID information not detected");
+}
+else if(type === "Other"){
+checks.push("ℹ️ No specific mandatory format configured; manual review required");
+}
+
+if(failed.length){
+result.risk=true;
+result.message="Mandatory field validation failed";
+result.finding=checks.join("<br>")+(checks.length?"<br><br>":"")+"❌ Missing / invalid field(s):<br>"+failed.join("<br>");
+}else{
+result.risk=false;
+result.message="Mandatory field validation passed";
+result.finding=checks.join("<br>");
+}
 
 return result;
-
 }
 
 
